@@ -13,7 +13,7 @@
   $feedbackMessage = "";
 
   if (isset($_POST["task-completed"])) {
-    $taskCompleted = $_POST["task-completed"];
+    $taskCompleted = mysqli_real_escape_string($conn, $_POST["task-completed"]);
     $query = "UPDATE tasks SET complete = 1 WHERE id ='{$taskCompleted}'";
 
     if (prepareQuery($query)) {
@@ -31,8 +31,8 @@
   }
 
   if (isset($_POST["add-task"])) {
-    $taskName = $_POST["taskname"];
-    $priority = $_POST["priority"];
+    $taskName = mysqli_real_escape_string($conn, $_POST["taskname"]);
+    $priority = mysqli_real_escape_string($conn, $_POST["priority"]);
 
     $query = "INSERT INTO tasks VALUES ('', '{$taskName}', 0, '{$priority}')";
 
@@ -76,7 +76,7 @@
     $query .= " ORDER BY complete DESC";
   }
 
-  $totalCompleted = 0;
+  $totalTasksCompleted = 0;
 
   if (prepareQuery($query)) {
     $stmt->bind_result($id, $taskName, $completed, $priority);
@@ -88,11 +88,11 @@
   $getTypeFilter = "filter";
   $filterTypes = array(
     array("all", "View all"),
-    array("completed", "Show all completed"),
+    array("completed", "Only show completed"),
     array("unfinished", "Only show unfinished tasks"),
-    array("high", "Only show high priority"),
-    array("normal", "Only show normal priority"),
-    array("low", "Only show low priority")
+    array("high", "Only show urgent tasks"),
+    array("normal", "Only show do when possible"),
+    array("low", "Only show tasks marked with no stress")
   );
 
   // These variables are used for creating the sort option list.
@@ -106,18 +106,14 @@
   );
 ?>
 <!-- HTML STARTS HERE --------------------------------------------------------->
-<div class="circle">
-  <h1>Todo</h1>
-</div>
-<p class="slogan">Access your TODO's whenever, whereever.</p>
+  <a href="./index.php">
+    <div class="circle">
+      <h1>Todo</h1>
+    </div>
+  </a>
+  <p class="slogan">Access your TODO's. Whenever. Whereever.</p>
 <form method="POST" action="./index.php">
   <table>
-    <thead>
-      <td>Task</td>
-      <td>Priority</td>
-      <td>Completed</td>
-      <td>Delete</td>
-    </thead>
     <?php while (mysqli_stmt_fetch($stmt)):
       $class = "";
       if ($completed == 1) {
@@ -129,17 +125,17 @@
       <td><?php echo changePriorityNumberToString($priority); ?></td>
       <td>
         <?php if ($completed != 1): ?>
-        <button type="submit" name="task-completed" value="<?php echo $id; ?>">
+        <button type="submit" class="icon-button" name="task-completed" value="<?php echo $id; ?>">
           <img src="./img/checkbox.svg" class="icon" alt="checkbox">
         </button>
         <?php else:
-          $totalCompleted++;
+          $totalTasksCompleted++;
           ?>
-          Marked as done
+          Done
         <?php endif; ?>
       </td>
       <td>
-        <button type="submit icon" name="task-deleted" value="<?php echo $id; ?>">
+        <button type="submit" class="icon-button" name="task-deleted" value="<?php echo $id; ?>">
           <img src="./img/delete.svg" class="icon" alt="trashcan">
         </button>
       </td>
@@ -147,11 +143,12 @@
     <?php endwhile; ?>
   </table>
 </form>
-<p class="info-text">Total number of completed tasks: <?php echo $totalCompleted; ?></p>
+<p class="info-text">Number of completed tasks in list: <?php echo $totalTasksCompleted; ?></p>
+<h2>Sort and filter</h2>
 <!-- THIS FORM IS USED FOR SORTING THE TASK LIST ------------------------------>
 <form class="flex" method="GET" action="./index.php">
   <label class="small" for="sort">Sort TODO's by:</label>
-  <select class="small" name="sort" placeholder="Sort by">
+  <select class="small" name="sort" id="sort">
     <!-- TODO: Make sure your sort list works as your filter list. -->
     <?php $filterQuery = isset($_GET["filter"]) ? "&filter=$filter" : "" ?>
     <?php $sortOptionList = createListOfOptions ($sortTypes, $getTypeSort); ?>
@@ -164,24 +161,25 @@
     <input type="hidden" name="sort" value="<?php echo $sort; ?>">
   <?php endif; ?>
   <label class="small" for="filter">Filter TODO's by:</label>
-  <select class="small" name="filter" placeholder="Filter by">
+  <select class="small" name="filter" id="filter">
     <?php $filterOptionList = createListOfOptions ($filterTypes, $getTypeFilter); ?>
   </select>
   <button class="button small" type="submit">Filter</button>
 </form>
-<h2>Add another task to the list</h2>
+<h2>Add another task</h2>
+<!-- THIS FORM IS USED FOR ADDING ANOTHER TASK -------------------------------->
 <form method="POST" action="./index.php">
   <div class="input-wrapper">
     <label for="taskname">Task</label>
     <input type="text" name="taskname" id="taskname" required placeholder="Add another task">
   </div>
   <label for="priority">Priority</label>
-    <select name="priority">
-      <option value="1">Low priority</option>
-      <option value="2">Normal priority</option>
-      <option value="3">High priority</option>
+    <select name="priority" id="priority">
+      <option value="1">No stress</option>
+      <option value="2" selected>Normal</option>
+      <option value="3">Urgent</option>
     </select>
   <button class="button" type="submit" name="add-task">Add</button>
 </form>
-<?php if ($feedbackMessage) { echo $feedbackMessage; } ?>
+<?php if ($feedbackMessage) { echo "<p class=\"info-text\">$feedbackMessage</p>"; } ?>
 <?php include_once "./footer.php" ?>

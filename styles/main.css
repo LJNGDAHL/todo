@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin: 0;
 }
 
@@ -35,15 +35,64 @@ body {
 h1 {
   color: #f8f8f8;
   font-family: 'Oleo Script', cursive;
-  font-size: 10rem;
+  font-size: 7rem;
   margin: 0;
-  padding-top: 9rem;
+  padding-top: 6.5rem;
   text-transform: uppercase;
 }
 
 h2 {
-  font-size: 4rem;
+  font-family: 'Oleo Script', cursive;
+  font-size: 3rem;
 }
+
+.info-text {
+  font-size: 1.5rem;
+  font-style: italic;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* -----------------------------------------------------------------------------
+END OF GLOBAL STYLES
+----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+START OF INTRODUCTION
+----------------------------------------------------------------------------- */
+
+/*.top-container {
+  background-color: #FFC107;
+}*/
+
+.circle {
+  background-color: #221D23;
+  margin: 0 auto;
+  height: 20rem;
+  width: 20rem;
+  border-radius: 50%;
+}
+
+.circle:hover {
+  background-color: #FFC107;
+}
+
+.slogan {
+  font-family: 'Oleo Script', cursive;
+  font-size: 3rem;
+}
+
+.slogan::first-letter {
+  font-size: 5rem;
+}
+
+/* -----------------------------------------------------------------------------
+END OF INTRODUCTION
+----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+START OF BUTTON AND INPUT FIELDS
+----------------------------------------------------------------------------- */
 
 /* Completely remove from the flow but leave available to screen readers. */
   label {
@@ -56,9 +105,7 @@ h2 {
   width: 1px;
 }
 
-/* Button and input fields starts here. ------------------------------------ */
-
-input, .button, select, table {
+.button, select, table {
   text-align: center;
   width: 100%;
 }
@@ -66,6 +113,7 @@ input, .button, select, table {
 .input-wrapper, .button, select {
   background-color: #fff;
   border: 1px solid #efefef;
+  border-radius: 2px;
   color: #c3c3c3;
   height: 6rem;
   margin: 1rem 0;
@@ -81,6 +129,7 @@ input, .button {
 input {
   background-color: transparent;
   height: 6rem;
+  width: 100%;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
@@ -88,7 +137,6 @@ input {
 
 .button {
   background-color: #FF1966;
-  border-radius: 2px;
   box-sizing: border-box;
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1);
   color: #fff;
@@ -107,35 +155,16 @@ input {
   transform: translateY(5px);
 }
 
-
-/* Button and input fields ends here. --------------------------------------- */
-
 /* -----------------------------------------------------------------------------
-END OF GLOBAL STYLES
------------------------------------------------------------------------------ */
-/* -----------------------------------------------------------------------------
-START OF INTRODUCTION
------------------------------------------------------------------------------ */
-.circle {
-  background-color: #221D23;
-  margin: 0 auto;
-  height: 30rem;
-  width: 30rem;
-  border-radius: 50%;
-}
-
-.slogan {
-  font-family: 'Oleo Script', cursive;
-  font-size: 3rem;
-}
-
-/* -----------------------------------------------------------------------------
-END OF INTRODUCTION
+END OF BUTTON AND INPUT FIELDS
 ----------------------------------------------------------------------------- */
 /* -----------------------------------------------------------------------------
 START OF FILTER AND SORT
 ----------------------------------------------------------------------------- */
 
+option {
+  text-align: center;
+}
 
 @media screen and (min-width: 751px) {
   .flex {
@@ -173,33 +202,44 @@ table {
   vertical-align: middle;
 }
 
-tr {
-  background-color: #1EFFBF;
-}
 
 td {
+  border-bottom: 6px solid #1EFFBF;
+  border-bottom: 6px solid #FFC107;
+  font-weight: 600;
   height: 3em;
-  padding: 0;
+  padding: 1em;
+  text-align: left;
 }
 
 .done {
-  background: repeating-linear-gradient(
+  /*background: repeating-linear-gradient(
     135deg,
     #D2FFF2,
     #D2FFF2 10px,
     #BBFFEB 10px,
     #BBFFEB 20px
-  );
+  );*/
   color: grey;
   font-style: italic;
+  text-decoration: line-through;
 }
 
-.submit .icon {
+tr:hover {
+  /*background: */
+  background-color: #FFC107;
+}
+
+.icon-button {
   background-color: transparent;
+  border: transparent;
+  height: 100%;
+  width: 100%;
 }
 
 .icon {
-  width: 1rem;
+  height: 3rem;
+  padding: 0;
 }
 
 /* -----------------------------------------------------------------------------

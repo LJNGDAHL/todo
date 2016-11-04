@@ -1,6 +1,11 @@
 <?php
   require_once './db_connect.php';
 
+  /**
+   * This function prepares a query and executes the query is valid.
+   * @param  [type] $query [description]
+   * @return [type]        [description]
+   */
   function prepareQuery($query) {
     global $conn;
     global $stmt;
@@ -11,15 +16,6 @@
     }
     return NULL;
   }
-
-  $filterTypes = array(
-    array("all", "View all"),
-    array("completed", "Show all completed"),
-    array("unfinished", "Only show unfinished tasks"),
-    array("high", "Only show high priority"),
-    array("normal", "Only show normal priority"),
-    array("low", "Only show low priority")
-  );
 
 /**
  * A function that creates a option elements from an array.
@@ -55,6 +51,4 @@ function changePriorityNumberToString($priority) {
       return "No priority";
   }
 }
-
-
 ?>
