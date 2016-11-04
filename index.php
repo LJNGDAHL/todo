@@ -76,6 +76,8 @@
     $query .= " ORDER BY complete DESC";
   }
 
+  $totalCompleted = 0;
+
   if (prepareQuery($query)) {
     $stmt->bind_result($id, $taskName, $completed, $priority);
   }
@@ -117,27 +119,22 @@
       <td>Delete</td>
     </thead>
     <?php while (mysqli_stmt_fetch($stmt)):
-      $totalCompleted = count($completed);
       $class = "";
       if ($completed == 1) {
         $class = "done";
-      } elseif ($priority == 3) {
-        $class = "high-priority";
-      } elseif ($priority == 2) {
-        $class = "normal-priority";
-      } elseif ($priority == 1) {
-        $class = "low-priority";
       }
     ?>
     <tr class="<?php echo $class; ?>">
       <td><?php echo $taskName; ?></td>
-      <td><?php echo $priority; ?></td>
+      <td><?php echo changePriorityNumberToString($priority); ?></td>
       <td>
         <?php if ($completed != 1): ?>
         <button type="submit" name="task-completed" value="<?php echo $id; ?>">
           <img src="./img/checkbox.svg" class="icon" alt="checkbox">
         </button>
-        <?php else: ?>
+        <?php else:
+          $totalCompleted++;
+          ?>
           Marked as done
         <?php endif; ?>
       </td>
@@ -147,10 +144,10 @@
         </button>
       </td>
     </tr>
-    <!-- <tr> <?php echo $totalCompleted; ?></tr> -->
     <?php endwhile; ?>
   </table>
 </form>
+<p class="info-text">Total number of completed tasks: <?php echo $totalCompleted; ?></p>
 <!-- THIS FORM IS USED FOR SORTING THE TASK LIST ------------------------------>
 <form class="flex" method="GET" action="./index.php">
   <label class="small" for="sort">Sort TODO's by:</label>
@@ -172,8 +169,6 @@
   </select>
   <button class="button small" type="submit">Filter</button>
 </form>
-<?php // TODO: Fixa nedanstående så att antal räknas rätt. ?>
-<!-- <p>Total number of unfinished tasks: <?php echo count($completed == 0); ?></p> -->
 <h2>Add another task to the list</h2>
 <form method="POST" action="./index.php">
   <div class="input-wrapper">

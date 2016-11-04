@@ -173,6 +173,10 @@ table {
   vertical-align: middle;
 }
 
+tr {
+  background-color: #1EFFBF;
+}
+
 td {
   height: 3em;
   padding: 0;
@@ -189,11 +193,6 @@ td {
   color: grey;
   font-style: italic;
 }
-
-.high-priority, .normal-priority, .low-priority {
-  background-color: #1EFFBF;
-}
-
 
 .submit .icon {
   background-color: transparent;

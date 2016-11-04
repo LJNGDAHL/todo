@@ -40,5 +40,21 @@ function createListOfOptions ($array, $type) {
   }
 }
 
+function changePriorityNumberToString($priority) {
+  switch ($priority) {
+    case "1":
+      return "No stress";
+      break;
+    case "2":
+      return "Do when possible";
+      break;
+    case "3":
+      return "Urgent!";
+      break;
+    default:
+      return "No priority";
+  }
+}
+
 
 ?>
