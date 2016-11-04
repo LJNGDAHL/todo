@@ -7,6 +7,9 @@
     echo $db_error_message;
   }
 
+  /* --------------------------------------------------------------------------
+  START OF FEEDBACK MESSAGE THAT PRINTS INFO ABOUT THE DATABASE UPDATE
+  -------------------------------------------------------------------------- */
   $feedbackMessage = "";
 
   if (isset($_POST["task-completed"])) {
@@ -38,14 +41,10 @@
     }
   }
 
-// var_dump($_POST);
-// var_dump($_GET);
+  /* --------------------------------------------------------------------------
+  START OF STATEMENT AND QUERIES THAT ARE USED FOR SHOWING TASKS IN TODO LIST
+  -------------------------------------------------------------------------- */
 
-?>
-<div class="circle">
-  <h1>Todo</h1>
-</div>
-<?php
   global $stmt;
   $query = "SELECT * FROM tasks";
 
@@ -80,62 +79,35 @@
   if (prepareQuery($query)) {
     $stmt->bind_result($id, $taskName, $completed, $priority);
   }
-?>
+  /* --------------------------------------------------------------------------
+  START OF VARIABLES THAT ARE USED FOR CREATING THE OPTION LISTS
+  -------------------------------------------------------------------------- */
+  // These variables are used for creating the filter option list.
+  $getTypeFilter = "filter";
+  $filterTypes = array(
+    array("all", "View all"),
+    array("completed", "Show all completed"),
+    array("unfinished", "Only show unfinished tasks"),
+    array("high", "Only show high priority"),
+    array("normal", "Only show normal priority"),
+    array("low", "Only show low priority")
+  );
 
-<form class="flex" method="GET" action="./index.php">
-  <label class="small" for="sort">Sort TODO's by:</label>
-  <select class="small" name="sort" placeholder="Sort by">
-    <?php $filterQuery = isset($_GET["filter"]) ? "&filter=$filter" : "" ?>
-    <?php
-    // TODO: Make sure that sort works the same way as filter.
-      $sortTypes = array(
-        array("name", "Name"),
-        array("asc", "Ascending priority"),
-        array("desc", "Descending priority"),
-        array("done", "Completed"),
-        array("original", "Unsorted")
-      );
-      for ($i = 0; $i < count($sortTypes); $i++) {
-        $sortShortName = $sortTypes[$i][0];
-        $sortRealName = $sortTypes[$i][1];
-        if (isset($_GET["sort"]) && $sortShortName == $_GET["sort"]) {
-          echo "<option value=\"$sortShortName\" selected>$sortRealName</option>";
-        } else {
-          echo "<option value=\"$sortShortName\">$sortRealName</option>";
-        }
-      }
-    ?>
-  </select>
-  <button class="button small" type="submit">Sort</button>
-</form>
-<form class="flex" method="GET" action="./index.php">
-    <?php if (isset($_GET["sort"])): ?>
-      <input type="hidden" name="sort" value="<?php echo $sort; ?>">
-    <?php endif; ?>
-    <label class="small" for="filter">Filter TODO's by:</label>
-    <select class="small" name="filter" placeholder="Filter by">
-    <?php
-      $filterTypes = array(
-        array("all", "View all"),
-        array("completed", "Show all completed"),
-        array("unfinished", "Only show unfinished tasks"),
-        array("high", "Only show high priority"),
-        array("normal", "Only show normal priority"),
-        array("low", "Only show low priority")
-      );
-      for ($i = 0; $i < count($filterTypes); $i++) {
-        $filterShortName = $filterTypes[$i][0];
-        $filterRealName = $filterTypes[$i][1];
-        if (isset($_GET["filter"]) && $filterShortName == $_GET["filter"]) {
-          echo "<option value=\"$filterShortName\" selected>$filterRealName</option>";
-        } else {
-          echo "<option value=\"$filterShortName\">$filterRealName</option>";
-        }
-      }
-    ?>
-    </select>
-  <button class="button small" type="submit">Filter</button>
-</form>
+  // These variables are used for creating the sort option list.
+  $getTypeSort = "sort";
+  $sortTypes = array(
+    array("name", "Name"),
+    array("asc", "Ascending priority"),
+    array("desc", "Descending priority"),
+    array("done", "Completed"),
+    array("original", "Unsorted")
+  );
+?>
+<!-- HTML STARTS HERE --------------------------------------------------------->
+<div class="circle">
+  <h1>Todo</h1>
+</div>
+<p class="slogan">Access your TODO's whenever, whereever.</p>
 <form method="POST" action="./index.php">
   <table>
     <thead>
@@ -145,7 +117,6 @@
       <td>Delete</td>
     </thead>
     <?php while (mysqli_stmt_fetch($stmt)):
-      // TODO: Fixa denna.
       $totalCompleted = count($completed);
       $class = "";
       if ($completed == 1) {
@@ -180,19 +151,40 @@
     <?php endwhile; ?>
   </table>
 </form>
+<!-- THIS FORM IS USED FOR SORTING THE TASK LIST ------------------------------>
+<form class="flex" method="GET" action="./index.php">
+  <label class="small" for="sort">Sort TODO's by:</label>
+  <select class="small" name="sort" placeholder="Sort by">
+    <!-- TODO: Make sure your sort list works as your filter list. -->
+    <?php $filterQuery = isset($_GET["filter"]) ? "&filter=$filter" : "" ?>
+    <?php $sortOptionList = createListOfOptions ($sortTypes, $getTypeSort); ?>
+  </select>
+  <button class="button small" type="submit">Sort</button>
+</form>
+<!-- THIS FORM IS USED FOR FILTERING THE TASK LIST ---------------------------->
+<form class="flex" method="GET" action="./index.php">
+  <?php if (isset($_GET["sort"])): ?>
+    <input type="hidden" name="sort" value="<?php echo $sort; ?>">
+  <?php endif; ?>
+  <label class="small" for="filter">Filter TODO's by:</label>
+  <select class="small" name="filter" placeholder="Filter by">
+    <?php $filterOptionList = createListOfOptions ($filterTypes, $getTypeFilter); ?>
+  </select>
+  <button class="button small" type="submit">Filter</button>
+</form>
 <?php // TODO: Fixa nedanstående så att antal räknas rätt. ?>
 <!-- <p>Total number of unfinished tasks: <?php echo count($completed == 0); ?></p> -->
-<h2>Add another task</h2>
+<h2>Add another task to the list</h2>
 <form method="POST" action="./index.php">
   <div class="input-wrapper">
     <label for="taskname">Task</label>
-    <input type="text" name="taskname" id="taskname" required>
+    <input type="text" name="taskname" id="taskname" required placeholder="Add another task">
   </div>
   <label for="priority">Priority</label>
     <select name="priority">
-      <option value="1">Low</option>
-      <option value="2">Normal</option>
-      <option value="3">High</option>
+      <option value="1">Low priority</option>
+      <option value="2">Normal priority</option>
+      <option value="3">High priority</option>
     </select>
   <button class="button" type="submit" name="add-task">Add</button>
 </form>
