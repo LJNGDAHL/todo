@@ -1,0 +1,200 @@
+@import "./normalize.css";
+@import url('https://fonts.googleapis.com/css?family=Oleo+Script|Open+Sans:400,400i,600');
+
+/* -----------------------------------------------------------------------------
+START OF GLOBAL STYLES
+----------------------------------------------------------------------------- */
+
+html {
+  background-color: #f8f8f8;
+  font-size: 62.5%; /* 1rem = 10px */
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+body {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.content {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 3rem;
+  width: 100vw;
+}
+
+@media screen and (min-width: 751px) {
+  .content {
+    max-width: 600px;
+  }
+}
+
+.circle {
+  background-color: #FF1966;
+  margin: 0 auto;
+  height: 40rem;
+  width: 40rem;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+h1 {
+  color: #f8f8f8;
+  font-family: 'Oleo Script', cursive;
+  font-size: 15rem;
+  margin: 0;
+  padding-top: 12rem;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 4rem;
+}
+
+/* Completely remove from the flow but leave available to screen readers. */
+  label {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* Button and input fields starts here. ------------------------------------ */
+
+input, .button, select, table {
+  text-align: center;
+  width: 100%;
+}
+
+.input-wrapper, .button, select {
+  background-color: #fff;
+  border: 1px solid #efefef;
+  color: #c3c3c3;
+  height: 6rem;
+  margin: 1rem 0;
+  position: relative;
+}
+
+input, .button {
+  border: 0px solid;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+input {
+  background-color: transparent;
+  height: 6rem;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.button {
+  background-color: #FF1966;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  display: block;
+  height: 6rem;
+  padding: 2rem 0;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #FF3F69;
+}
+
+.button:active {
+  transform: translateY(5px);
+}
+
+
+/* Button and input fields ends here. --------------------------------------- */
+
+/* -----------------------------------------------------------------------------
+END OF GLOBAL STYLES
+----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+START OF FILTER AND SORT
+----------------------------------------------------------------------------- */
+
+@media screen and (min-width: 751px) {
+  .flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .small {
+    height: 4rem;
+    width: 30%;
+  }
+
+  select.small {
+    box-sizing: border-box;
+    flex-grow: 2;
+  }
+
+  .button.small {
+    margin-left: 1rem;
+    padding: 1rem;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+END OF FILTER AND SORT
+----------------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------------
+START OF TODO LIST
+----------------------------------------------------------------------------- */
+
+table {
+  border-spacing: 0;
+  margin: 0 auto;
+  vertical-align: middle;
+}
+
+td {
+  height: 3em;
+  padding: 0;
+}
+
+.done {
+  background: repeating-linear-gradient(
+    135deg,
+    #D2FFF2,
+    #D2FFF2 10px,
+    #BBFFEB 10px,
+    #BBFFEB 20px
+  );
+  color: grey;
+  font-style: italic;
+}
+
+.high-priority, .normal-priority {
+  background-color: #1EFFBF;
+}
+
+.low-priority {
+  background-color: #84FFDC;
+}
+
+.submit .icon {
+  background-color: transparent;
+}
+
+.icon {
+  width: 1rem;
+}
+
+/* -----------------------------------------------------------------------------
+END OF TODO LIST
+----------------------------------------------------------------------------- */
