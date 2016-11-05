@@ -63,10 +63,6 @@ END OF GLOBAL STYLES
 START OF INTRODUCTION
 ----------------------------------------------------------------------------- */
 
-/*.top-container {
-  background-color: #FFC107;
-}*/
-
 .circle {
   background-color: #221D23;
   margin: 0 auto;
@@ -235,7 +231,7 @@ tr:hover {
 .icon-button {
   background-color: transparent;
   border: transparent;
-  color: currentColor;
+  color: #221D23;
   cursor: pointer;
   height: 100%;
   width: 100%;
