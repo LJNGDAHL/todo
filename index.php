@@ -90,23 +90,23 @@
     array("all", "View all"),
     array("completed", "Only show completed"),
     array("unfinished", "Only show unfinished tasks"),
-    array("high", "Only show urgent tasks"),
-    array("normal", "Only show do when possible"),
-    array("low", "Only show tasks marked with no stress")
+    array("high", "Only show high priority"),
+    array("normal", "Only show normal priority"),
+    array("low", "Only show low priority")
   );
 
   // These variables are used for creating the sort option list.
   $getTypeSort = "sort";
   $sortTypes = array(
-    array("name", "Name"),
-    array("asc", "Ascending priority"),
-    array("desc", "Descending priority"),
-    array("done", "Completed"),
-    array("original", "Unsorted")
+    array("name", "Sort by name"),
+    array("asc", "Sort by ascending priority"),
+    array("desc", "Sort by descending priority"),
+    array("done", "Sort by completed"),
+    array("original", "Do not sort")
   );
 ?>
 <!-- HTML STARTS HERE --------------------------------------------------------->
-  <a href="./index.php">
+  <a href="./index.php" title="Go back to start">
     <div class="circle">
       <h1>Todo</h1>
     </div>
@@ -126,7 +126,9 @@
       <td>
         <?php if ($completed != 1): ?>
         <button type="submit" class="icon-button" name="task-completed" value="<?php echo $id; ?>">
-          <img src="./img/checkbox.svg" class="icon" alt="checkbox">
+          <svg class="icon">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#checkbox"></use>
+          </svg>
         </button>
         <?php else:
           $totalTasksCompleted++;
@@ -136,7 +138,10 @@
       </td>
       <td>
         <button type="submit" class="icon-button" name="task-deleted" value="<?php echo $id; ?>">
-          <img src="./img/delete.svg" class="icon" alt="trashcan">
+          <!-- <img src="./img/delete.svg" class="icon" alt="trashcan"> -->
+          <svg class="icon">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trashcan"></use>
+          </svg>
         </button>
       </td>
     </tr>
@@ -145,26 +150,20 @@
 </form>
 <p class="info-text">Number of completed tasks in list: <?php echo $totalTasksCompleted; ?></p>
 <h2>Sort and filter</h2>
-<!-- THIS FORM IS USED FOR SORTING THE TASK LIST ------------------------------>
-<form class="flex" method="GET" action="./index.php">
-  <label class="small" for="sort">Sort TODO's by:</label>
-  <select class="small" name="sort" id="sort">
-    <!-- TODO: Make sure your sort list works as your filter list. -->
-    <?php $filterQuery = isset($_GET["filter"]) ? "&filter=$filter" : "" ?>
-    <?php $sortOptionList = createListOfOptions ($sortTypes, $getTypeSort); ?>
-  </select>
-  <button class="button small" type="submit">Sort</button>
-</form>
-<!-- THIS FORM IS USED FOR FILTERING THE TASK LIST ---------------------------->
-<form class="flex" method="GET" action="./index.php">
-  <?php if (isset($_GET["sort"])): ?>
-    <input type="hidden" name="sort" value="<?php echo $sort; ?>">
-  <?php endif; ?>
-  <label class="small" for="filter">Filter TODO's by:</label>
-  <select class="small" name="filter" id="filter">
-    <?php $filterOptionList = createListOfOptions ($filterTypes, $getTypeFilter); ?>
-  </select>
-  <button class="button small" type="submit">Filter</button>
+<!-- THIS FORM IS USED FOR SORTING AND FILTERING THE TASK LIST ---------------->
+<form method="GET" action="./index.php">
+  <div class="flex">
+    <label for="sort">Sort TODO's by:</label>
+    <select class="small" name="sort" id="sort">
+      <?php $filterQuery = isset($_GET["filter"]) ? "&filter=$filter" : "" ?>
+      <?php $sortOptionList = createListOfOptions ($sortTypes, $getTypeSort); ?>
+    </select>
+    <label for="filter">Filter TODO's by:</label>
+    <select class="small" name="filter" id="filter">
+      <?php $filterOptionList = createListOfOptions ($filterTypes, $getTypeFilter); ?>
+    </select>
+  </div>
+  <button class="small button" type="submit">Go</button>
 </form>
 <h2>Add another task</h2>
 <!-- THIS FORM IS USED FOR ADDING ANOTHER TASK -------------------------------->
@@ -173,11 +172,11 @@
     <label for="taskname">Task</label>
     <input type="text" name="taskname" id="taskname" required placeholder="Add another task">
   </div>
-  <label for="priority">Priority</label>
+  <label class="hidden" for="priority">Priority</label>
     <select name="priority" id="priority">
-      <option value="1">No stress</option>
-      <option value="2" selected>Normal</option>
-      <option value="3">Urgent</option>
+      <option value="1">Low priority</option>
+      <option value="2" selected>Normal priority</option>
+      <option value="3">High priority</option>
     </select>
   <button class="button" type="submit" name="add-task">Add</button>
 </form>

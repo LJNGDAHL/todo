@@ -39,13 +39,13 @@ function createListOfOptions ($array, $type) {
 function changePriorityNumberToString($priority) {
   switch ($priority) {
     case "1":
-      return "No stress";
+      return "Low priority";
       break;
     case "2":
-      return "Do when possible";
+      return "Normal priority";
       break;
     case "3":
-      return "Urgent!";
+      return "High priority";
       break;
     default:
       return "No priority";
