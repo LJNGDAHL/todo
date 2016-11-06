@@ -81,6 +81,7 @@
   if (prepareQuery($query)) {
     $stmt->bind_result($id, $taskName, $completed, $priority);
   }
+
   /* --------------------------------------------------------------------------
   START OF VARIABLES THAT ARE USED FOR CREATING THE OPTION LISTS
   -------------------------------------------------------------------------- */
@@ -146,7 +147,11 @@
         </button>
       </td>
     </tr>
-    <?php endwhile; ?>
+    <?php
+      endwhile;
+      $stmt->close();
+      $conn->close();
+    ?>
   </table>
 </form>
 <p class="info-text">Number of completed tasks in list: <?php echo $totalTasksCompleted; ?></p>
@@ -188,4 +193,4 @@
   <button class="button" type="submit" name="add-task">Add</button>
 </form>
 <?php if ($feedbackMessage) { echo "<p class=\"info-text\">$feedbackMessage</p>"; } ?>
-<?php include_once "./footer.php" ?>
+<?php include_once "./footer.php"; ?>

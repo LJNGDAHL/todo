@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin: 0;
 }
 
@@ -23,10 +23,14 @@ body {
   box-sizing: border-box;
   margin: 0 auto;
   padding: 3rem;
-  width: 100vw;
+  width: 100%;
 }
 
-@media screen and (min-width: 751px) {
+@media screen and (min-width: 500px) {
+  body {
+    font-size: 1.5rem;
+  }
+
   .content {
     max-width: 600px;
   }
@@ -172,7 +176,7 @@ select {
   text-align: left;
 }
 
-@media screen and (min-width: 751px) {
+@media screen and (min-width: 500px) {
   .flex {
     display: flex;
     justify-content: space-between;
@@ -239,9 +243,17 @@ tr:hover {
 }
 
 .icon {
-  height: 3rem;
-  width: 3rem;
+  height: 2rem;
+  width: 2rem;
   padding: 0;
+}
+
+@media screen and (min-width: 500px) {
+  .icon {
+    height: 3rem;
+    width: 3rem;
+    padding: 0;
+  }
 }
 
 .icon-button {
