@@ -85,7 +85,7 @@
   START OF VARIABLES THAT ARE USED FOR CREATING THE OPTION LISTS
   -------------------------------------------------------------------------- */
   // These variables are used for creating the filter option list.
-  $getTypeFilter = "filter";
+  $getFilter = "filter";
   $filterTypes = array(
     array("all", "View all"),
     array("completed", "Only show completed"),
@@ -96,7 +96,7 @@
   );
 
   // These variables are used for creating the sort option list.
-  $getTypeSort = "sort";
+  $getSort = "sort";
   $sortTypes = array(
     array("name", "Sort by name"),
     array("asc", "Sort by ascending priority"),
@@ -117,12 +117,16 @@
     <?php while (mysqli_stmt_fetch($stmt)):
       $class = "";
       if ($completed == 1) {
-        $class = "done";
+        $class = " class=\"done\"";
+      } elseif ($priority == 3) {
+        $class = " class=\"high-priority\"";
+      } elseif ($priority == 1) {
+        $class = " class=\"low-priority\"";
       }
     ?>
-    <tr class="<?php echo $class; ?>">
+    <tr<?php echo $class; ?>>
       <td><?php echo $taskName; ?></td>
-      <td><?php echo changePriorityNumberToString($priority); ?></td>
+      <td><?php echo getPriorityByValue($priority); ?></td>
       <td>
         <?php if ($completed != 1): ?>
         <button type="submit" class="icon-button" name="task-completed" value="<?php echo $id; ?>">
@@ -130,15 +134,12 @@
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#checkbox"></use>
           </svg>
         </button>
-        <?php else:
-          $totalTasksCompleted++;
-          ?>
-          Done
+        <?php else: $totalTasksCompleted++; ?>
+        Done
         <?php endif; ?>
       </td>
       <td>
         <button type="submit" class="icon-button" name="task-deleted" value="<?php echo $id; ?>">
-          <!-- <img src="./img/delete.svg" class="icon" alt="trashcan"> -->
           <svg class="icon">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trashcan"></use>
           </svg>
@@ -156,11 +157,17 @@
     <label for="sort">Sort TODO's by:</label>
     <select class="small" name="sort" id="sort">
       <?php $filterQuery = isset($_GET["filter"]) ? "&filter=$filter" : "" ?>
-      <?php $sortOptionList = createListOfOptions ($sortTypes, $getTypeSort); ?>
+      <?php
+        $sortOptionList = createListOfOptions($sortTypes, $getSort);
+        echo implode("\n", $sortOptionList);
+      ?>
     </select>
     <label for="filter">Filter TODO's by:</label>
     <select class="small" name="filter" id="filter">
-      <?php $filterOptionList = createListOfOptions ($filterTypes, $getTypeFilter); ?>
+      <?php
+        $filterOptionList = createListOfOptions($filterTypes, $getFilter);
+        echo implode("\n", $filterOptionList);
+      ?>
     </select>
   </div>
   <button class="small button" type="submit">Go</button>

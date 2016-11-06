@@ -1,5 +1,5 @@
 @import "./normalize.css";
-@import url('https://fonts.googleapis.com/css?family=Oleo+Script|Open+Sans:400,400i,600');
+@import url('https://fonts.googleapis.com/css?family=Oleo+Script|Open+Sans:400,400i,600,800');
 
 /* -----------------------------------------------------------------------------
 START OF GLOBAL STYLES
@@ -47,13 +47,13 @@ h2 {
   margin: 4rem 0 1rem;
 }
 
+a {
+  text-decoration: none;
+}
+
 .info-text {
   font-size: 1.5rem;
   font-style: italic;
-}
-
-a {
-  text-decoration: none;
 }
 
 /* -----------------------------------------------------------------------------
@@ -64,11 +64,11 @@ START OF INTRODUCTION
 ----------------------------------------------------------------------------- */
 
 .circle {
+  border-radius: 50%;
   background-color: #221D23;
   margin: 0 auto;
   height: 20rem;
   width: 20rem;
-  border-radius: 50%;
 }
 
 .circle:hover {
@@ -121,12 +121,14 @@ input, .button {
   border: 0px solid;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
+  padding-left: 1rem;
   text-align: center;
 }
 
 input {
   background-color: transparent;
   height: 5rem;
+  text-align: left;
   width: 100%;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -166,6 +168,8 @@ option {
 
 select {
   background-color: #f8f8f8;
+  padding-left: 1rem;
+  text-align: left;
 }
 
 @media screen and (min-width: 751px) {
@@ -207,9 +211,7 @@ table {
   vertical-align: middle;
 }
 
-
 td {
-  border-bottom: 6px solid #1EFFBF;
   border-bottom: 6px solid #FFC107;
   font-weight: 600;
   height: 3em;
@@ -218,16 +220,30 @@ td {
 }
 
 .done {
-  color: grey;
+  color: #6E6D6C;
   font-style: italic;
   text-decoration: line-through;
+}
+
+.high-priority > td {
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.low-priority > td {
+  color: #383735;
 }
 
 tr:hover {
   background-color: #FFC107;
 }
 
-/* TODO: SORT OUT COLORS! */
+.icon {
+  height: 3rem;
+  width: 3rem;
+  padding: 0;
+}
+
 .icon-button {
   background-color: transparent;
   border: transparent;
@@ -239,13 +255,6 @@ tr:hover {
 
 .icon-button:hover {
   color: #f8f8f8;
-
-}
-
-.icon {
-  height: 3rem;
-  width: 3rem;
-  padding: 0;
 }
 
 /* -----------------------------------------------------------------------------
