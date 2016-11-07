@@ -114,45 +114,48 @@
     </div>
   </a>
   <p class="slogan">Access your TODO's. Whenever. Whereever.</p>
+<!-- THIS FORM CONTAINS THE TASK LIST ----------------------------------------->
 <form method="POST" action="./index.php">
   <table>
-    <?php while (mysqli_stmt_fetch($stmt)):
-      $class = "";
-      if ($completed == 1) {
-        $class = " class=\"done\"";
-      } elseif ($priority == 3) {
-        $class = " class=\"high-priority\"";
-      } elseif ($priority == 1) {
-        $class = " class=\"low-priority\"";
-      }
-    ?>
-    <tr<?php echo $class; ?>>
-      <td><?php echo $taskName; ?></td>
-      <td><?php echo getPriorityByValue($priority); ?></td>
-      <td>
-        <?php if ($completed != 1): ?>
-        <button type="submit" class="icon-button" name="task-completed" value="<?php echo $id; ?>">
-          <svg class="icon">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#checkbox"></use>
-          </svg>
-        </button>
-        <?php else: $totalTasksCompleted++; ?>
-        Done
-        <?php endif; ?>
-      </td>
-      <td>
-        <button type="submit" class="icon-button" name="task-deleted" value="<?php echo $id; ?>">
-          <svg class="icon">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trashcan"></use>
-          </svg>
-        </button>
-      </td>
-    </tr>
-    <?php
-      endwhile;
-      $stmt->close();
-      $conn->close();
-    ?>
+    <tbody>
+      <?php while (mysqli_stmt_fetch($stmt)):
+        $class = "";
+        if ($completed == 1) {
+          $class = " class=\"done\"";
+        } elseif ($priority == 3) {
+          $class = " class=\"high-priority\"";
+        } elseif ($priority == 1) {
+          $class = " class=\"low-priority\"";
+        }
+      ?>
+      <tr<?php echo $class; ?>>
+        <td><?php echo $taskName; ?></td>
+        <td><?php echo getPriorityByValue($priority); ?></td>
+        <td class="center-text">
+          <?php if ($completed != 1): ?>
+          <button type="submit" class="icon-button" name="task-completed" value="<?php echo $id; ?>">
+            <svg class="icon">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#checkbox"></use>
+            </svg>
+          </button>
+          <?php else: $totalTasksCompleted++; ?>
+          Done
+          <?php endif; ?>
+        </td>
+        <td>
+          <button type="submit" class="icon-button" name="task-deleted" value="<?php echo $id; ?>">
+            <svg class="icon">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trashcan"></use>
+            </svg>
+          </button>
+        </td>
+      </tr>
+      <?php
+        endwhile;
+        $stmt->close();
+        $conn->close();
+      ?>
+    </tbody>
   </table>
 </form>
 <p class="info-text">Number of completed tasks in list: <?php echo $totalTasksCompleted; ?></p>
