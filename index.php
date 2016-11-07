@@ -10,6 +10,7 @@
   /* --------------------------------------------------------------------------
   START OF FEEDBACK MESSAGE THAT PRINTS INFO ABOUT THE DATABASE UPDATE
   -------------------------------------------------------------------------- */
+
   $feedbackMessage = "";
 
   if (isset($_POST["task-completed"])) {
@@ -159,21 +160,31 @@
 <!-- THIS FORM IS USED FOR SORTING AND FILTERING THE TASK LIST ---------------->
 <form method="GET" action="./index.php">
   <div class="flex">
-    <label for="sort">Sort TODO's by:</label>
-    <select class="small" name="sort" id="sort">
-      <?php $filterQuery = isset($_GET["filter"]) ? "&filter=$filter" : "" ?>
-      <?php
-        $sortOptionList = createListOfOptions($sortTypes, $getSort);
-        echo implode("\n", $sortOptionList);
-      ?>
-    </select>
+      <label for="sort">Sort TODO's by:</label>
+      <div class="select-arrows">
+        <select class="small" name="sort" id="sort">
+          <?php $filterQuery = isset($_GET["filter"]) ? "&filter=$filter" : "" ?>
+          <?php
+            $sortOptionList = createListOfOptions($sortTypes, $getSort);
+            echo implode("\n", $sortOptionList);
+          ?>
+        </select>
+        <svg class="icon select-arrows">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-arrows"></use>
+        </svg>
+      </div>
     <label for="filter">Filter TODO's by:</label>
-    <select class="small" name="filter" id="filter">
-      <?php
-        $filterOptionList = createListOfOptions($filterTypes, $getFilter);
-        echo implode("\n", $filterOptionList);
-      ?>
-    </select>
+    <div class="select-arrows">
+      <select class="small" name="filter" id="filter">
+        <?php
+          $filterOptionList = createListOfOptions($filterTypes, $getFilter);
+          echo implode("\n", $filterOptionList);
+        ?>
+      </select>
+      <svg class="icon select-arrows">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-arrows"></use>
+      </svg>
+    </div>
   </div>
   <button class="small button" type="submit">Go</button>
 </form>
@@ -184,7 +195,7 @@
     <label for="taskname">Task</label>
     <input type="text" name="taskname" id="taskname" required placeholder="Add another task">
   </div>
-  <label class="hidden" for="priority">Priority</label>
+  <label for="priority">Priority</label>
     <select name="priority" id="priority">
       <option value="1">Low priority</option>
       <option value="2" selected>Normal priority</option>
