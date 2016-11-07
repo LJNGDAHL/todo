@@ -1,5 +1,5 @@
 <?php
-  require_once './db_connect.php';
+  require_once "./db_connect.php";
 
   /**
    * Prepares a query and executes if valid.

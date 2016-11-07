@@ -1,7 +1,7 @@
 <?php
-  include_once "./header.php";
-  include_once "./db_connect.php";
-  include_once "./functions.php";
+  require_once "./header.php";
+  require_once "./db_connect.php";
+  require_once "./functions.php";
 
   if ($db_error) {
     echo $db_error_message;
@@ -193,4 +193,4 @@
   <button class="button" type="submit" name="add-task">Add</button>
 </form>
 <?php if ($feedbackMessage) { echo "<p class=\"info-text\">$feedbackMessage</p>"; } ?>
-<?php include_once "./footer.php"; ?>
+<?php require_once "./footer.php"; ?>
