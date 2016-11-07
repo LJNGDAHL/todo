@@ -135,7 +135,7 @@ label {
 }
 
 .input-wrapper, select {
-  background-color: #f8f8f8;
+  background-color: #fff;
   border: 1px solid #efefef;
   border-radius: 2px;
   color: #979999;
@@ -160,7 +160,6 @@ input {
 }
 
 select {
-  background-color: #f8f8f8;
   font-size: 1.6rem;
   padding-left: 1rem;
   text-align: left;
