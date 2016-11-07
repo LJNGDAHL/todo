@@ -196,11 +196,16 @@
     <input type="text" name="taskname" id="taskname" required placeholder="Add another task">
   </div>
   <label for="priority">Priority</label>
+  <div class="large">
     <select name="priority" id="priority">
       <option value="1">Low priority</option>
       <option value="2" selected>Normal priority</option>
       <option value="3">High priority</option>
     </select>
+    <svg class="icon select-arrows">
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-arrows"></use>
+    </svg>
+  </div>
   <button class="button" type="submit" name="add-task">Add</button>
 </form>
 <?php if ($feedbackMessage) { echo "<p class=\"info-text\">$feedbackMessage</p>"; } ?>

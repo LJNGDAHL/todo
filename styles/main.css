@@ -115,6 +115,7 @@ label {
   background-color: #FF1966;
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1);
   color: #f8f8f8;
+  margin-top: 1rem;
   padding: 1rem 0;
   text-transform: uppercase;
 }
@@ -165,14 +166,19 @@ select {
 .flex {
   display: flex;
   flex-direction: column;
-  margin: 0 -3px;
+  margin: 0 -0.3rem;
 }
 
 .select-arrows {
   position: relative;
   flex-grow: 1;
-  margin: 0 3px 10px;
+  margin: 0 0.3rem;
 }
+
+.large {
+  position: relative;
+}
+
 
 .icon.select-arrows {
   color: #979999;
@@ -189,7 +195,7 @@ select {
   }
 
   .icon.select-arrows {
-    right: -2%;
+    right: -1%;
   }
 
   select.small:first-of-type {
