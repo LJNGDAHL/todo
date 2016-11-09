@@ -77,7 +77,7 @@
     $query .= " ORDER BY complete DESC";
   }
 
-  $totalTasksCompleted = 0;
+  $totalTasksUncompleted = 0;
 
   if (prepareQuery($query)) {
     $stmt->bind_result($id, $taskName, $completed, $priority);
@@ -132,13 +132,14 @@
         <td><?php echo $taskName; ?></td>
         <td><?php echo getPriorityByValue($priority); ?></td>
         <td class="center-text">
-          <?php if ($completed != 1): ?>
+          <?php if ($completed != 1):
+            $totalTasksUncompleted++; ?>
           <button type="submit" class="icon-button" name="task-completed" value="<?php echo $id; ?>">
             <svg class="icon">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#checkbox"></use>
             </svg>
           </button>
-          <?php else: $totalTasksCompleted++; ?>
+          <?php else: ?>
           Done
           <?php endif; ?>
         </td>
@@ -158,7 +159,7 @@
     </tbody>
   </table>
 </form>
-<p class="info-text">Number of completed tasks in list: <?php echo $totalTasksCompleted; ?></p>
+<p class="info-text">Number of uncompleted tasks in current view: <?php echo $totalTasksUncompleted; ?></p>
 <h2>Sort and filter</h2>
 <!-- THIS FORM IS USED FOR SORTING AND FILTERING THE TASK LIST ---------------->
 <form method="GET" action="./index.php">
