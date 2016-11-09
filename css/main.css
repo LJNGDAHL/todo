@@ -256,6 +256,7 @@ tbody > tr:hover {
   height: 2rem;
   width: 2rem;
   padding: 0;
+  pointer-events: none;
 }
 
 .link-with-icon {
