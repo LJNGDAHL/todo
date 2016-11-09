@@ -1,7 +1,8 @@
 <?php
-  require_once "./header.php";
-  require_once "./db_connect.php";
-  require_once "./functions.php";
+  require_once "./lib/config.php";
+  require_once "./lib/header.php";
+  require_once "./lib/db_connect.php";
+  require_once "./lib/functions.php";
 
   if ($db_error) {
     echo $db_error_message;
@@ -83,14 +84,18 @@
     $stmt->bind_result($id, $taskName, $completed, $priority);
   }
 
+  $stmt->store_result();
+  $numberOfRows = mysqli_stmt_num_rows($stmt);
+
   /* --------------------------------------------------------------------------
   START OF VARIABLES THAT ARE USED FOR CREATING THE OPTION LISTS
   -------------------------------------------------------------------------- */
+
   // These variables are used for creating the filter option list.
   $getFilter = "filter";
   $filterTypes = array(
     array("all", "View all"),
-    array("completed", "Only show completed"),
+    array("completed", "Only show finished tasks"),
     array("unfinished", "Only show unfinished tasks"),
     array("high", "Only show high priority"),
     array("normal", "Only show normal priority"),
@@ -115,6 +120,9 @@
   </a>
   <p class="slogan">Access your TODO's. Whenever. Whereever.</p>
 <!-- THIS FORM CONTAINS THE TASK LIST ----------------------------------------->
+<?php if($numberOfRows == 0): ?>
+  <p>You don't have any tasks in this view. Try adding one!</p>
+<?php else: ?>
 <form method="POST" action="./index.php">
   <table>
     <tbody>
@@ -151,15 +159,12 @@
           </button>
         </td>
       </tr>
-      <?php
-        endwhile;
-        $stmt->close();
-        $conn->close();
-      ?>
+      <?php endwhile; $stmt->close(); $conn->close(); ?>
     </tbody>
   </table>
 </form>
-<p class="info-text">Number of uncompleted tasks in current view: <?php echo $totalTasksUncompleted; ?></p>
+<p class="info-text">Unfinished tasks in current view: <?php echo $totalTasksUncompleted; ?></p>
+<?php endif; ?>
 <h2>Sort and filter</h2>
 <!-- THIS FORM IS USED FOR SORTING AND FILTERING THE TASK LIST ---------------->
 <form method="GET" action="./index.php">
@@ -202,9 +207,9 @@
   <label for="priority">Priority</label>
   <div class="large">
     <select name="priority" id="priority">
-      <option value="1">Low priority</option>
-      <option value="2" selected>Normal priority</option>
       <option value="3">High priority</option>
+      <option value="2" selected>Normal priority</option>
+      <option value="1">Low priority</option>
     </select>
     <svg class="icon select-arrows">
       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-arrows"></use>
@@ -213,4 +218,4 @@
   <button class="button" type="submit" name="add-task">Add</button>
 </form>
 <?php if ($feedbackMessage) { echo "<p class=\"info-text\">$feedbackMessage</p>"; } ?>
-<?php require_once "./footer.php"; ?>
+<?php require_once "./lib/footer.php"; ?>
