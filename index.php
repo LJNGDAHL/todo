@@ -121,7 +121,7 @@
   <p class="slogan">Access your TODO's. Whenever. Whereever.</p>
 <!-- THIS FORM CONTAINS THE TASK LIST ----------------------------------------->
 <?php if($numberOfRows == 0): ?>
-  <p>You don't have any tasks in this view. Try adding one!</p>
+<p class="info-text">You don't have any tasks in this view.</p>
 <?php else: ?>
 <form method="POST" action="./index.php">
   <table>
